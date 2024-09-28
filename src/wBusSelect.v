@@ -1,17 +1,11 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Author: AJ Koska
 // 
 // Create Date: 08/26/2024 05:53:00 PM
-// Design Name: 
 // Module Name: wBusSelect
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Description: Module for producing control signals for the W Bus MUX select signals
 // 
-// Dependencies: 
 // 
 // Revision:
 // Revision 0.01 - File Created
@@ -30,7 +24,8 @@ module wBusSelect # (parameter BITS = 16, parameter OP_BITS = 5)(
     );
     
     wire [1:0] MUXSel;
-    
+
+    //W Bus MUX Select Calculations
     assign MUXSel[0] = &{opcode[2], opcode[0]};
     
     assign MUXSel[1] = (&{opcode[2], !opcode[1], opcode[0]}) ||
