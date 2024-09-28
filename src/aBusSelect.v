@@ -1,17 +1,11 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Author: AJ Koska
 // 
 // Create Date: 08/26/2024 04:04:38 AM
-// Design Name: 
 // Module Name: aBusSelect
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Description: Module for controlling MUX select signals of the A Bus
 // 
-// Dependencies: 
 // 
 // Revision:
 // Revision 0.01 - File Created
@@ -29,6 +23,9 @@ module aBusSelect #(parameter BITS = 16, parameter OP_BITS = 5)(
     );
     
     wire [1:0] MUXSel;
+
+    //Control Signals for A Bus Mux Calculations
+    //Simplfied to make for effiecient and simple logic calcuations
     assign MUXSel[1] = (&{opcode[3], opcode[2], !opcode[1], !opcode[0]}) ||
                        (&{opcode[4], opcode[3]}) ||
                        (&{opcode[4], opcode[1], opcode[0]});
