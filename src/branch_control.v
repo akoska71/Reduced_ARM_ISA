@@ -1,19 +1,11 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Author: AJ Koska
 // 
 // Create Date: 08/25/2024 05:35:20 PM
-// Design Name: 
 // Module Name: branch_control
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Description: branch control Unit for calculating next PC
 // 
-// Dependencies: 
-// 
-// Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
 // 
@@ -34,8 +26,8 @@ module branch_control # (parameter BITS = 16, parameter OP_BITS = 5)(
     
     always @ * begin
         case(pcSel)
-        1'b0: x_nextPC = currPC + 1;
-        1'b1: x_nextPC = currPC + imm;
+        1'b0: x_nextPC = currPC + 1; //Next Instruction
+        1'b1: x_nextPC = currPC + imm; //Branch or Jump Instruction
         endcase
     end
     
