@@ -1,3 +1,7 @@
+//Author: AJ Koska
+//Module Name: bBusSelect
+//Description: Module for controlling MUX signals for control of the B Bus
+
 module bBusSelect # (parameter BITS = 16, parameter OP_BITS = 5)(
     input [BITS-1:0] BOut,
     input [4:0] imm5,
@@ -8,7 +12,9 @@ module bBusSelect # (parameter BITS = 16, parameter OP_BITS = 5)(
 );
 
     wire [2:0] MUXSel;
-    
+
+    //Calulation of the B Bus Mux Select Signals
+    //Simplified to make for efficient and simple calculations
     assign MUXSel[0] = (&{opcode[4], !opcode[1], !opcode[0]}) ||
                        (&{opcode[4], opcode[3]}) ||
                        (&{opcode[1], opcode[3]}) ||
@@ -27,7 +33,8 @@ module bBusSelect # (parameter BITS = 16, parameter OP_BITS = 5)(
      wire [15:0] signex_imm5;
      wire [15:0] signex_imm8;
      wire [15:0] signex_imm11;
-     
+
+    //Sign extended immediate values
      assign signex_imm5 = {imm5[4], imm5[4], imm5[4], imm5[4], imm5[4], imm5[4], imm5[4], imm5[4],
                            imm5[4], imm5[4], imm5[4], imm5};
                            
