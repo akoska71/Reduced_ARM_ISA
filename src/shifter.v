@@ -1,15 +1,12 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Author: AJ Koska
 // 
 // Create Date: 08/11/2024 02:13:08 PM
 // Design Name: 
 // Module Name: shifter
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Description: shifter module for performing all bit shift operations as well as
+// movis(move into high bits) instruction
 // 
 // Dependencies: 
 // 
@@ -49,10 +46,13 @@ module shifter # (parameter BITS = 16, parameter OP_BITS = 5)(
     wire [(BITS*2)-1:0] rotate_tmp;
     
     reg [1:0] muxSel;
-    
+
+    //Arithmatic Right Shift
     assign arith_r_shift = aBus >>> imm5[3:0];
+    //Logical Right Shift
     assign logic_r_shift = aBus >> imm5[3:0];
-    
+
+    //Rotate Right
     assign rotate_tmp = {aBus, aBus} >> imm5[3:0];
     assign rotate_r = rotate_tmp[15:0]; 
 
@@ -62,7 +62,8 @@ module shifter # (parameter BITS = 16, parameter OP_BITS = 5)(
             1'b1: l_shift = 8;
        endcase
     end
-    
+
+    //movis operation
     assign x_lshift_imm5 = imm5 << l_shift;
     assign y_lshift_imm5 = extend | x_lshift_imm5;
     
@@ -77,10 +78,10 @@ module shifter # (parameter BITS = 16, parameter OP_BITS = 5)(
     always @ * begin
         muxSel = {shift_op[2] ,!shift_op[4] & shift_op[1]};
         case(muxSel)
-            2'b00: shift_out = arith_r_shift;
-            2'b01: shift_out = logic_r_shift;
-            2'b10: shift_out = logic_l_shift;
-            2'b11: shift_out = rotate_r;
+            2'b00: shift_out = arith_r_shift; //ash
+            2'b01: shift_out = logic_r_shift; //lsh
+            2'b10: shift_out = logic_l_shift; //movis
+            2'b11: shift_out = rotate_r; //rot
         endcase
     end
     
