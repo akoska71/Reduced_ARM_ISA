@@ -1,15 +1,10 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Author: AJ Koska
 // 
 // Create Date: 08/10/2024 11:10:15 PM
-// Design Name: 
 // Module Name: instruction_decoder
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Description: Instruction Decoder Module for reduced ARM ISA
 // 
 // Dependencies: 
 // 
@@ -46,27 +41,30 @@ module instruction_decoder # (parameter BITS = 16,
     assign C = opCode[2];
     assign D = opCode[1];
     assign E = opCode[0];
-    
+
+    //Update Condition Code Register
     assign cond_update = (&{!B, !D, E}) ||
                          (&{!B, !C, !E}) ||
                          (&{!A, !C, !D, E}) ||
                          (&{!A, B, C, !D, !E});
-                         
+
+    //Memory Read Enable
     assign mem_rd = &{E, C ,D ,!A};
-    
+    //Memory Write Enable
     assign mem_wr = (&{E, D, !C, !A}) || (&(opCode));
-    
+    //Register Write Enable
     assign reg_wr = (&{!A, !C, !D}) ||
                     (&{!A, B, C}) ||
                     (&{!A, D, !E}) ||
                     (&{!B, C, D}) ||
                     (&{A, !B, !C}) ||
                     (&{A, !B, !D, !E});
-                             
+
+    //Register Select Values
     assign wSel = instr[10:8];
     assign aSel = instr[7:5];
     assign bSel = instr[4:2];
-    
+    //Immediate Values
     assign imm5 = instr[4:0];
     assign imm8 = instr[7:0];
     assign imm11 = instr[10:0];
