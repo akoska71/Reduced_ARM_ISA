@@ -29,7 +29,9 @@ module alu_test();
     integer i;
 
     alu dut(.a(a), .b(b), .op(op), .cond_code(cond_code), .out(out));
-    
+
+    //Uses monitor to print exact values that ALU is printing,
+    //Confirm that values are right based off of printed values.
     initial begin
         a = 16'h0084;
         b = 16'h009d;
