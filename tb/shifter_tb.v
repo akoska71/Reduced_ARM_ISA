@@ -30,7 +30,8 @@ module shifter_tb();
     integer j;
 
     shifter dut(.aBus(aBus), .imm5(imm5), .shift_op(shift_op), .shift_out(shift_out));
-    
+
+    //Monitor operations performed by the shifter unit inside the ARM Processor
     initial begin
         aBus = 16'hf084;
         $monitor("a:%b\n  imm5:%d  op:%b\n  out:%b\n", aBus, imm5, shift_op, shift_out);
